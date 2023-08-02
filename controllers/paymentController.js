@@ -54,7 +54,7 @@ export const paymentVarification = async (req, res) => {
       })
 
       res.redirect(
-         `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+         `${process.env.FRONTEND_URL}/paymentsuccess?reference=${razorpay_payment_id}`
       )
       res.status(201).json({
          success: true,

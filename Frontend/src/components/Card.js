@@ -9,9 +9,9 @@ export default function Card({ name, amount, img }) {
 
    const checkoutHandler = async () => {
 
-      const { data: { key } } = await axios.get("http://localhost:4000/api/v1/getkey")
+      const { data: { key } } = await axios.get("/api/v1/getkey")
 
-      const { data } = await axios.post("http://localhost:4000/api/v1/checkout", {
+      const { data } = await axios.post("/api/v1/checkout", {
          amount
       })
 
@@ -23,7 +23,7 @@ export default function Card({ name, amount, img }) {
          image: profileImage,
          description: "Learing Razorpay Payment Integration",
          order_id: data.order.id,
-         callback_url: "http://localhost:4000/api/v1/paymentverification",
+         callback_url: "/api/v1/paymentverification",
          prefill: {
             name: "John Doe",
             email: "johnDoe@gmail.com",

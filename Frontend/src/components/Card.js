@@ -23,17 +23,26 @@ export default function Card({ name, amount, img }) {
          image: profileImage,
          description: "Learing Razorpay Payment Integration",
          order_id: data.order.id,
-         callback_url: "https://razorpay-demo.vercel.app/api/v1/paymentverification",
+         // callback_url: "/api/v1/paymentverification",
+
+         handler: async function (response) {
+            const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+
+            await axios.post("/api/v1/paymentverification", {
+               razorpay_payment_id, razorpay_order_id, razorpay_signature,
+            })
+         },
+
          prefill: {
             name: "John Doe",
             email: "johnDoe@gmail.com",
             contact: "0987654321"
          },
-         notes:{
-            "address":"RazorPay Corporate Office"
+         notes: {
+            "address": "RazorPay Corporate Office"
          },
-         theme:{
-            "color":"#121212"
+         theme: {
+            "color": "#121212"
          }
 
       };

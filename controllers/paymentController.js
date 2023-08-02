@@ -31,8 +31,6 @@ export const getApiKey = async (req, res) => {
 
 export const paymentVarification = async (req, res) => {
 
-   // console.log(req.body);
-
    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body
 
    const body = razorpay_order_id + "|" + razorpay_payment_id;

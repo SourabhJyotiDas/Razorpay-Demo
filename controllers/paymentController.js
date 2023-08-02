@@ -51,10 +51,7 @@ export const paymentVarification = async (req, res) => {
             razorpay_payment_id,
             razorpay_signature
          })
-
-         res.redirect(
-            `/paymentsuccess?reference=${razorpay_payment_id}`
-         )
+         
          res.status(201).json({
             success: true,
             message: `Order Placed Successfully. Payment ID: ${payment._id}`,

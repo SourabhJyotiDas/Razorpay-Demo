@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from "axios";
-import profileImage from "../Asset/profileImage.jpg"
+import profileImage from "../Asset/profileImage.jpg";
+import {useNavigate} from "react-router-dom"
 
 
 export default function Card({ name, amount, img }) {
+
+   const navigate = useNavigate()
 
 
 
@@ -31,6 +34,7 @@ export default function Card({ name, amount, img }) {
             await axios.post("/api/v1/paymentverification", {
                razorpay_payment_id, razorpay_order_id, razorpay_signature,
             })
+            navigate("/paymentsuccess")
          },
 
          prefill: {
@@ -48,6 +52,8 @@ export default function Card({ name, amount, img }) {
       };
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+
+
 
    };
 

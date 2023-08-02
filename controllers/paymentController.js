@@ -31,38 +31,45 @@ export const getApiKey = async (req, res) => {
 
 export const paymentVarification = async (req, res) => {
 
-   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body
+   try {
+      const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body
 
-   const body = razorpay_order_id + "|" + razorpay_payment_id;
+      const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-   const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
-      .update(body)
-      .digest("hex");
+      const expectedSignature = crypto
+         .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
+         .update(body)
+         .digest("hex");
 
-   const isAuthentic = expectedSignature === razorpay_signature;
+      const isAuthentic = expectedSignature === razorpay_signature;
 
-   if (isAuthentic) {
+      if (isAuthentic) {
 
-      // Save info to database
-      const payment = await Payment.create({
-         razorpay_order_id,
-         razorpay_payment_id,
-         razorpay_signature
-      })
+         // Save info to database
+         const payment = await Payment.create({
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature
+         })
 
-      res.redirect(
-         `/paymentsuccess?reference=${razorpay_payment_id}`
-      )
-      res.status(201).json({
-         success: true,
-         message: `Order Placed Successfully. Payment ID: ${payment._id}`,
-      });
+         res.redirect(
+            `/paymentsuccess?reference=${razorpay_payment_id}`
+         )
+         res.status(201).json({
+            success: true,
+            message: `Order Placed Successfully. Payment ID: ${payment._id}`,
+         });
 
-   } else {
-      return res.status(500).json({
+      } else {
+         res.status(500).json({
+            success: false,
+            message: "Payment Failed"
+         })
+      }
+   } catch (error) {
+      res.status(500).json({
          success: false,
-         message: "Payment Failed"
+         message: error.message
       })
    }
 }

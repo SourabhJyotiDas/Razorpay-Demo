@@ -8,8 +8,6 @@ export default function Card({ name, amount, img }) {
 
    const navigate = useNavigate()
 
-
-
    const checkoutHandler = async () => {
 
       const { data: { key } } = await axios.get("/api/v1/getkey")
@@ -33,7 +31,7 @@ export default function Card({ name, amount, img }) {
 
             await axios.post("/api/v1/paymentverification", {
                razorpay_payment_id, razorpay_order_id, razorpay_signature,
-            })
+            });
             navigate(`/paymentsuccess/${razorpay_payment_id}`)
          },
 
@@ -52,9 +50,6 @@ export default function Card({ name, amount, img }) {
       };
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-
-
-
    };
 
    return (

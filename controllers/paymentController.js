@@ -8,7 +8,6 @@ export const checkout = async (req, res) => {
    const options = {
       amount: Number(req.body.amount * 100),
       currency: "INR",
-      receipt: "order id lgboo"
    }
 
    const order = await instance.orders.create(options);
@@ -54,7 +53,7 @@ export const paymentVarification = async (req, res) => {
 
          res.status(201).json({
             success: true,
-            razorpay_payment_id
+           message: `Payment successfull on ${Payment._id}`
          });
 
       } else {

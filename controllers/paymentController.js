@@ -46,15 +46,15 @@ export const paymentVarification = async (req, res) => {
       if (isAuthentic) {
 
          // Save info to database
-         const payment = await Payment.create({
+         await Payment.create({
             razorpay_order_id,
             razorpay_payment_id,
             razorpay_signature
          })
-         
+
          res.status(201).json({
             success: true,
-            message: `Order Placed Successfully. Payment ID: ${payment._id}`,
+            razorpay_payment_id
          });
 
       } else {

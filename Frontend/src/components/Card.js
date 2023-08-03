@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import profileImage from "../Asset/profileImage.jpg";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Card({ name, amount, img }) {
@@ -34,7 +34,7 @@ export default function Card({ name, amount, img }) {
             await axios.post("/api/v1/paymentverification", {
                razorpay_payment_id, razorpay_order_id, razorpay_signature,
             })
-            navigate("/paymentsuccess")
+            navigate(`/paymentsuccess/${razorpay_payment_id}`)
          },
 
          prefill: {
